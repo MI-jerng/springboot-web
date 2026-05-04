@@ -10,15 +10,13 @@ pipeline {
 
         stage('Build') {
             steps {
-                withMaven(maven: 'Maven3') {
-                    sh 'mvn clean package -DskipTests'
-                }
+                bat 'mvn clean package -DskipTests'
             }
         }
 
         stage('Deploy') {
             steps {
-                // Activate Ansible environment in WSL and run playbook
+                // Call Ansible from WSL
                 sh '''
                 source ~/ansible-env/bin/activate
                 cd ~/midterm
