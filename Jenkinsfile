@@ -32,7 +32,7 @@ pipeline {
                 to: 'e20220753@gmail.com',
                 subject: 'Spring Boot Build Success',
                 body: """Build succeeded!
-Website deployed at: http://152.42.188.57/Midterm-2026/chi_sav_moeng
+Website deployed at: http://178.128.93.188/Midterm-2026/chi_sav_moeng
 Build URL: ${BUILD_URL}
 Build Number: ${BUILD_NUMBER}"""
             )
