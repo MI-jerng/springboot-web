@@ -10,11 +10,10 @@ pipeline {
 
         stage('Build') {
             steps {
-                bat "\"C:\\Program Files\\Apache\\Maven\\apache-maven-3.9.15\\bin\\mvn.cmd\" clean package -DskipTests"
+                // On Windows agents, use bat
+                bat "gradlew.bat build -x test"
             }
         }
-
-
 
         stage('Deploy') {
             steps {
