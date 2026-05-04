@@ -10,9 +10,10 @@ pipeline {
 
         stage('Build') {
             steps {
-                bat 'mvn clean package -DskipTests'
+                bat "${tool 'Maven3'}\\bin\\mvn.cmd clean package -DskipTests"
             }
         }
+
 
         stage('Deploy') {
             steps {
