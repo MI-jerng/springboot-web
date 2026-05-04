@@ -10,14 +10,18 @@ pipeline {
 
         stage('Build') {
             steps {
-                // On Windows agents, use bat
-                bat "gradlew.bat build -x test"
+                // Stop any old Gradle daemons and clean before build
+                bat "gradlew.bat --stop"
+                bat "gradlew.bat clean build -x test"
             }
         }
 
         stage('Deploy') {
             steps {
-                bat "wsl bash -c 'source ~/ansible-env/bin/activate && cd ~/midterm && ansible-playbook -i inventory.ini deploy.yml'"
+                // Run Ansible inside WSL
+                bat '''
+                wsl bash -c "source ~/ansible-env/bin/activate && cd ~/midterm && ansible-playbook -i inventory.ini deploy.yml"
+                '''
             }
         }
     }
@@ -26,7 +30,7 @@ pipeline {
         success {
             emailext(
                 to: 'e20220753@gmail.com',
-                subject: 'Springboot_project-Chimoeng Build Success',
+                subject: 'Spring Boot Build Success',
                 body: """Build succeeded!
 Website deployed at: http://152.42.188.57/Midterm-2026/chi_sav_moeng
 Build URL: ${BUILD_URL}
@@ -36,7 +40,7 @@ Build Number: ${BUILD_NUMBER}"""
         failure {
             emailext(
                 to: 'e20220753@gmail.com',
-                subject: 'Springboot_project-Chimoeng Build Failed',
+                subject: 'Spring Boot Build Failed',
                 body: """Build failed!
 See Jenkins console: ${BUILD_URL}
 Build Number: ${BUILD_NUMBER}"""
