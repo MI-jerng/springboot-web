@@ -10,8 +10,9 @@ pipeline {
 
         stage('Build') {
             steps {
-                // Build Spring Boot project with Maven
-                sh 'mvn clean package -DskipTests'
+                withMaven(maven: 'Maven3') {
+                    sh 'mvn clean package -DskipTests'
+                }
             }
         }
 
