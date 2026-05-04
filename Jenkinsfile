@@ -17,12 +17,7 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                // Call Ansible from WSL
-                sh '''
-                source ~/ansible-env/bin/activate
-                cd ~/midterm
-                ansible-playbook -i inventory.ini deploy.yml
-                '''
+                bat "wsl bash -c 'source ~/ansible-env/bin/activate && cd ~/midterm && ansible-playbook -i inventory.ini deploy.yml'"
             }
         }
     }
